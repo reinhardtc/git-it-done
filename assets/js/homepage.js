@@ -33,7 +33,7 @@ function formSubmitHandler(event) {
   }
 }
 
-var displayRepos = function (repos, searchTerm) {
+function displayRepos(repos, searchTerm) {
   if (repos.length === 0) {
     repoContainerEl.textContent = "No repositories found";
     return;
@@ -84,6 +84,6 @@ var displayRepos = function (repos, searchTerm) {
     //append container to DOM
     repoContainerEl.appendChild(repoEl);
   }
-};
+}
 
 userFormEl.addEventListener("submit", formSubmitHandler);
