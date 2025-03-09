@@ -69,9 +69,12 @@ function displayRepos(repos, searchTerm) {
     //check if current repo has issues or not
     if (repos[i].open_issues_count > 0) {
       statusEl.innerHTML =
+        "<a href='./single-repo.html?repo=" +
+        repoName +
+        "'>" +
         "<i class='fas fa-times status-icon icon-danger'></i>" +
         repos[i].open_issues_count +
-        " issue(s)";
+        " issue(s)</a>";
     } else {
       statusEl.innerHTML =
         "<i class='fas fa-check-square status-icon icon-success'></i>";
