@@ -1,4 +1,5 @@
 var issueConatinerEl = document.querySelector("#issues-container");
+var limitWarningEl = document.querySelector("#limit-warning");
 
 function getRepoIssues(repo) {
   console.log(repo);
@@ -10,6 +11,10 @@ function getRepoIssues(repo) {
       response.json().then(function (data) {
         displayIssues(data);
         console.log(data);
+        //check if api has paginated issues
+        if (response.headers.get("link")) {
+          displayWarning(repo);
+        }
       });
     } else {
       alert("There was a problem with your request!");
@@ -17,7 +22,7 @@ function getRepoIssues(repo) {
   });
 }
 
-var displayIssues = function (issues) {
+function displayIssues(issues) {
   if (issues.length === 0) {
     issueConatinerEl.textContent = "This repo has no open issues!";
     return;
@@ -49,6 +54,17 @@ var displayIssues = function (issues) {
     issueEl.appendChild(typeEl);
     issueConatinerEl.appendChild(issueEl);
   }
-};
+}
 
-getRepoIssues("reinhardtc/git-it-done");
+function displayWarning(repo) {
+  // add text to warning container
+  limitWarningEl.textContent = "To see more than 30 issues, visit ";
+  var linkEl = document.createElement("a");
+  linkEl.textContent = "here";
+  linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
+  linkEl.setAttribute("target", "blank");
+
+  limitWarningEl.appendChild(linkEl);
+}
+
+getRepoIssues("facebook/react");
